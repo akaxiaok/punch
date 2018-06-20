@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { computed, observable } from "mobx";
 import { observer } from 'mobx-react';
+import 'normalize.css';
+import Grid from '@material-ui/core/Grid';
+
+
 import PunchButton from './PunchButton';
 import ProgressBar from './ProgressBar';
+import Nav from './Nav';
 
 class Store {
   @observable current = 1;
@@ -31,11 +36,24 @@ class App extends Component {
   };
 
   render() {
+    const style = {
+      direction: 'column',
+      wrap: 'nowrap'
+    };
+
     return (
       <div >
-        <PunchButton onClick={this.handleClick} />
-        <ProgressBar value={store.value} />
-        <Tip current={store.current} />
+        <Grid container spacing={0} style={{ height: '100vh' }} {...style}>
+          <Grid item xs={'auto'} >
+          </Grid >
+          <Grid item xs={12} >
+            <PunchButton onClick={this.handleClick} />
+            <ProgressBar value={store.value} />
+          </Grid >
+          <Grid item xs={'auto'} >
+            <Nav />
+          </Grid >
+        </Grid >
       </div >
     );
   }
