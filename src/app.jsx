@@ -1,39 +1,26 @@
 import React, { Component } from 'react';
-import { computed, observable } from "mobx";
 import { observer } from 'mobx-react';
-import 'normalize.css';
+import { Route, Switch } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid';
 
+import History from './History';
+import New from './New';
+import Start from './Start';
 
-import PunchButton from './PunchButton';
-import ProgressBar from './ProgressBar';
+import 'normalize.css';
+
+
 import Nav from './Nav';
 
-class Store {
-  @observable current = 1;
-  max = 37;
-
-  @computed
-  get value() {
-    return this.current / this.max * 100;
-  }
-}
-
-const store = new Store();
-window.store = store;
-
-@observer
-class Tip extends Component {
-  render() {
-    return (<div >{this.props.current}</div > );
-  }
-}
 
 @observer
 class App extends Component {
-  handleClick = () => {
-    store.current += 1;
-  };
+
+  childRender = (Component) => {
+    return (props) => (
+      <Component store={this.props.store} />
+    )
+  }
 
   render() {
     const style = {
@@ -47,8 +34,12 @@ class App extends Component {
           <Grid item xs={'auto'} >
           </Grid >
           <Grid item xs={12} >
-            <PunchButton onClick={this.handleClick} />
-            <ProgressBar value={store.value} />
+            <Switch >
+              <Route exact path='/' render={this.childRender(New)} />
+              <Route exact path='/new' render={this.childRender(New)} />
+              <Route path='/start' render={this.childRender(Start)} />
+              <Route path='/history' render={this.childRender(History)} />
+            </Switch >
           </Grid >
           <Grid item xs={'auto'} >
             <Nav />

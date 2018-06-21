@@ -4,7 +4,6 @@
   "description": "Just Puch It!",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.dev-server.js",
     "server": "node server.js",
     "build": "webpack --config webpack.prod.js"
   },
@@ -20,12 +19,14 @@
   "homepage": "https://github.com/akaxiaok/punch#readme",
   "dependencies": {
     "@material-ui/icons": "^1.1.0",
+    "lodash": "^4.17.10",
     "mobx": "^4.2.0",
     "mobx-react": "^5.0.0",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.0",
     "react": "^16.1.1",
-    "react-dom": "^16.1.1"
+    "react-dom": "^16.1.1",
+    "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

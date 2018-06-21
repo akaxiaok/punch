@@ -9,7 +9,7 @@ import { observer } from 'mobx-react';
 class ProgressBar extends React.Component {
   render() {
     return (
-      <LinearProgress {...this.props} valueBuffer={100} variant="buffer"></LinearProgress >
+      <LinearProgress {...this.props} valueBuffer={100} variant="buffer" />
     );
   }
 }
