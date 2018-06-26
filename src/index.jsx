@@ -4,7 +4,7 @@ import { AppContainer } from 'react-hot-loader';
 import { BrowserRouter } from 'react-router-dom'
 import Store from './store/store';
 
-import App from './app';
+import App from './component/app';
 
 const store = new Store();
 
@@ -23,7 +23,7 @@ const  render = ()=>{
 }
 render();
 if (module.hot) {
-  module.hot.accept('./app', function () {
+  module.hot.accept('./component/app', function () {
     render();
   });
 }

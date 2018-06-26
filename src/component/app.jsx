@@ -6,11 +6,9 @@ import Grid from '@material-ui/core/Grid';
 import History from './History';
 import New from './New';
 import Start from './Start';
-
-import 'normalize.css';
-
-
 import Nav from './Nav';
+
+import '../../node_modules/normalize.css/normalize.css';
 
 
 @observer
@@ -31,9 +29,9 @@ class App extends Component {
     return (
       <div >
         <Grid container spacing={0} style={{ height: '100vh' }} {...style}>
-          <Grid item xs={'auto'} >
+          <Grid item xs={2} >
           </Grid >
-          <Grid item xs={12} >
+          <Grid item xs={12}>
             <Switch >
               <Route exact path='/' render={this.childRender(New)} />
               <Route exact path='/new' render={this.childRender(New)} />
