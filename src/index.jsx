@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import { BrowserRouter   } from 'react-router-dom';
 
 import Store from './store/store';
 
@@ -14,9 +13,7 @@ const app = document.querySelector('#app');
 const  render = ()=>{
   ReactDOM.render(
     <AppContainer >
-      <BrowserRouter >
-        <App store={store} history={history}/>
-      </BrowserRouter >
+        <App store={store} />
     </AppContainer >,
     app);
 }

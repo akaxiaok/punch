@@ -34,7 +34,8 @@ module.exports = merge.strategy({
   plugins: [
     new CleanWebpackPlugin(['dist']), // 清空 dist 目录
     new HtmlWebpackPlugin({
-      title: 'ReactApp'
+      title: 'ReactApp',
+      template:'src/index.html'
     }), // 生成 html 文件
     new UglifyJSPlugin({  // 精简代码，丑化、压缩、裁剪不会运行的代码(tree shaking)，需要去掉 babel es6 模块，使用 webpack 的模块
       sourceMap: false
