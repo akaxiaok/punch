@@ -20,7 +20,8 @@ module.exports = merge.strategy({
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'ReactApp'
+      title: 'ReactApp',
+      template:'src/index.html'
     }), // 生成 html 文件
     // new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(), // 热替换 用于自定义的 server

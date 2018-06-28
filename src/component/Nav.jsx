@@ -7,7 +7,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import History from '@material-ui/icons/History';
 import CreateIcon from '@material-ui/icons/Create';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import { Link, withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class Nav extends React.Component {
   state = {
@@ -21,26 +21,22 @@ class Nav extends React.Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-
+    const LinkToNew = props => <Link to="/new" {...props} />;
+    const LinkToList = props => <Link to="/todoList" {...props} />;
+    const LinkToHistory = props => <Link to="/history" {...props} />;
     return (
       <BottomNavigation
         value={value}
         onChange={this.handleChange}
         showLabels
       >
-        <BottomNavigationAction label="New" icon={<CreateIcon /> } onClick={() => {
-          this.props.history.push("/new");
-        }}/>
-        <BottomNavigationAction label="Start" icon={<ThumbUpIcon />} onClick={() => {
-          this.props.history.push("/start");
-        }}/>
-        <BottomNavigationAction label="History" icon={<History />} onClick={() => {
-          this.props.history.push("/history");
-        }} />
+        <BottomNavigationAction label="New" icon={<CreateIcon />} component={LinkToNew} />
+        <BottomNavigationAction label="Start" icon={<ThumbUpIcon />} component={LinkToList} />
+        <BottomNavigationAction label="History" icon={<History />} component={LinkToHistory} />
       </BottomNavigation >
     )
       ;
   }
 }
 
-export default withRouter(Nav);
+export default Nav;

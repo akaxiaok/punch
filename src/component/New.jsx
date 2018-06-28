@@ -4,6 +4,7 @@
 import React from 'react';
 import { Button, TextField } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 
 class New extends React.Component {
   state = {
@@ -31,11 +32,15 @@ class New extends React.Component {
       alignItems: 'center',
       justify: 'center'
     };
-
+    const inputWidthMap = { xs: 12, sm: 10, md: 8, lg: 6, xl: 4 };
+    const gapWidthMap = { sm: 1, md: 2, lg: 3, xl: 4 };
     return (
-
       <Grid container spacing={0} style={{ height: '100%' }} {...style}>
-        <Grid item xs={12} >
+        <Hidden xsDown >
+          <Grid item {...gapWidthMap} >
+          </Grid >
+        </Hidden >
+        <Grid item {...inputWidthMap} >
           <TextField
             required
             ref="todoName"
@@ -53,7 +58,15 @@ class New extends React.Component {
             style={{ width: '100%' }}
           />
         </Grid >
-        <Grid item xs={12} >
+        <Hidden xsDown >
+          <Grid item {...gapWidthMap} >
+          </Grid >
+        </Hidden >
+        <Hidden xsDown >
+          <Grid item {...gapWidthMap} >
+          </Grid >
+        </Hidden >
+        <Grid item {...inputWidthMap} >
           <TextField
             required
             id="todoTimes"
@@ -79,6 +92,10 @@ class New extends React.Component {
             style={{ width: '100%' }}
           />
         </Grid >
+        <Hidden xsDown >
+          <Grid item {...gapWidthMap} >
+          </Grid >
+        </Hidden >
         <Grid item xs={2} >
           <Button onClick={this.create} color="primary" variant="raised" >Create</Button >
         </Grid >
