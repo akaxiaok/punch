@@ -8,21 +8,28 @@ import Hidden from '@material-ui/core/Hidden';
 
 class New extends React.Component {
   state = {
-    showError: false,
+    nameError: false,
+    timesError: false,
     todoName: '',
-    todoTimes: 0
+    todoTimes: 1,
+    nameErrorMessage: '',
+    timesErrorMessage: '',
   };
   create = () => {
     const todoName = this.state.todoName;
     const todoTimes = this.state.todoTimes;
     if (todoName && todoTimes) {
-      this.props.store.addTodo(todoName, todoTimes);
-      this.setState({ showError: false, todoName: '', todoTimes: 0 });
+      if (this.props.store.addTodo(todoName, todoTimes)) {
+        this.setState({ todoName: '', todoTimes: 1 });
+      } else {
+        this.setState({
+          nameError: true,
+          nameErrorMessage: 'This todo already exists.'
+        });
+      }
     } else {
-      this.setState({ showError: true });
+      this.setState({ nameError: true, timesError: true });
     }
-
-
   };
 
   render() {
@@ -32,6 +39,7 @@ class New extends React.Component {
       alignItems: 'center',
       justify: 'center'
     };
+    const { nameError, timesError, nameErrorMessage, timesErrorMessage, todoName, todoTimes } = this.state;
     const inputWidthMap = { xs: 12, sm: 10, md: 8, lg: 6, xl: 4 };
     const gapWidthMap = { sm: 1, md: 2, lg: 3, xl: 4 };
     return (
@@ -50,10 +58,11 @@ class New extends React.Component {
             InputLabelProps={{
               shrink: true,
             }}
-            value={this.state.todoName}
-            error={this.state.showError}
+            value={todoName}
+            error={nameError}
+            helperText={nameErrorMessage}
             onChange={event => {
-              this.setState({ todoName: event.target.value });
+              this.setState({ todoName: event.target.value, nameError: false, nameErrorMessage: '' });
             }}
             style={{ width: '100%' }}
           />
@@ -74,15 +83,16 @@ class New extends React.Component {
             label="Number"
             type="number"
             margin="normal"
+            helperText={timesErrorMessage}
             InputLabelProps={{
               shrink: true,
             }}
-            value={this.state.todoTimes}
-            error={this.state.showError}
+            value={todoTimes}
+            error={timesError}
             onChange={event => {
               const value = event.target.value;
               if (value < 1) {
-                this.setState({ todoTimes: 0 });
+                this.setState({ todoTimes: 1 });
               } else if (value >= Number.MAX_SAFE_INTEGER) {
                 this.setState({ todoTimes: Number.MAX_SAFE_INTEGER });
               } else {

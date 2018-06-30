@@ -7,7 +7,7 @@ class History extends Component {
   render() {
     let str = JSON.stringify(this.props.store.todos);
     return (
-      <span >{str}</span >
+      <span >{str}{this.props.store.todosCount}</span >
     )
   }
 }

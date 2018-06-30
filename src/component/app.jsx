@@ -31,22 +31,28 @@ class App extends Component {
         <CssBaseline />
         {/* The rest of your application */}
         <BrowserRouter >
-        <Grid container spacing={0} style={{ height: '100vh' }} {...style}>
-          <Grid item xs={2} >
-          </Grid >
-          <Grid item xs={12} >
+          <Grid container spacing={0} style={{ height: '100vh' }} {...style}>
+            <Grid item xs={2} >
+            </Grid >
+            <Grid item xs={12} >
               <Switch >
                 <Route path="/" exact render={this.childRender(New)} />
                 <Route path="/new" render={this.childRender(New)} />
-                <Route path="/todoList" exact component={this.childRender(TodoList)} />
-                <Route path="/todoList/:todo" component={this.childRender(Start)} />
+                <Route path="/todoList" render={() => {
+                  return (
+                    <div >
+                      <Route path="/todoList" component={this.childRender(TodoList)} />
+                      <Route path="/todoList/:todo" component={this.childRender(Start)} />
+                    </div >
+                  )
+                }} />
                 <Route path="/history" render={this.childRender(History)} />
               </Switch >
+            </Grid >
+            <Grid item xs={'auto'} >
+              <Nav />
+            </Grid >
           </Grid >
-          <Grid item xs={'auto'} >
-            <Nav />
-          </Grid >
-        </Grid >
         </BrowserRouter >
       </React.Fragment >
     );

@@ -12,8 +12,7 @@ module.exports = merge.strategy({
   mode: 'production',
   // devtool: 'source-map', // 生成 source-map 有多种类型
   entry: {
-    index: path.resolve(__dirname, 'src/index.jsx'),
-    vendor: ['react', 'react-dom', 'react-hot-loader']
+    index: path.resolve(__dirname, 'src/index.jsx')
   },
   output: {
     path: path.resolve(__dirname, 'dist'),//打包后的文件存放的地方 // path.resolve 生成绝对路径
@@ -23,6 +22,7 @@ module.exports = merge.strategy({
   },
   optimization: {
     splitChunks: {
+      chunks: 'all',
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
@@ -35,7 +35,7 @@ module.exports = merge.strategy({
     new CleanWebpackPlugin(['dist']), // 清空 dist 目录
     new HtmlWebpackPlugin({
       title: 'ReactApp',
-      template:'src/index.html'
+      template: 'src/index.html'
     }), // 生成 html 文件
     new UglifyJSPlugin({  // 精简代码，丑化、压缩、裁剪不会运行的代码(tree shaking)，需要去掉 babel es6 模块，使用 webpack 的模块
       sourceMap: false

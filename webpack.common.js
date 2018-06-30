@@ -36,5 +36,10 @@ module.exports = {
     alias: {
       components: path.resolve(__dirname, 'src/components')
     }
-  }
+  },
+  entry: {}, externals: {
+    'lodash': 'lodash',
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+  },
 };

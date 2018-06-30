@@ -8,6 +8,7 @@ import App from './component/app';
 
 const store = new Store();
 
+window.store = store;
 const app = document.querySelector('#app');
 
 const  render = ()=>{

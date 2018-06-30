@@ -5,10 +5,10 @@ const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 // 改用 express & webpack-dev-middleware
 module.exports = merge.strategy({
-  entry: 'replace', // or 'replace', defaults to 'append'
+  entry: 'append', // or 'replace', defaults to 'append'
 })(common, {
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'eval',
   entry: {
     // hot loader entry 文件都要添加 module.hot.accept
     index: ['react-hot-loader/patch',
@@ -30,6 +30,7 @@ module.exports = merge.strategy({
   },
   optimization: {
     splitChunks: {
+      chunks: 'all',
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
@@ -40,9 +41,7 @@ module.exports = merge.strategy({
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'ReactApp',
       template:'src/index.html'
-
     }), // 生成 html 文件
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin() // 热替换 用于自定义的 server
