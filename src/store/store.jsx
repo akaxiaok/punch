@@ -47,6 +47,16 @@ class Store {
       return true;
     }
   }
+
+  @saveTodos
+  removeTodo(name){
+    if (!this.todos[name]) {
+      return false;
+    } else {
+      this.todos[name] = undefined;
+      return true;
+    }
+  }
 }
 
 export default Store;

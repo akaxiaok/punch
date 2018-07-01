@@ -3,13 +3,11 @@ import { observer } from 'mobx-react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
-
-import History from './History';
 import New from './New';
 import TodoList from './TodoList';
 import Nav from './Nav';
 import Start from './Start';
-
+import History from './History';
 
 @observer
 class App extends Component {
@@ -18,7 +16,7 @@ class App extends Component {
     return (props) => (
       <Component store={this.props.store} />
     )
-  }
+  };
 
   render() {
     const style = {
@@ -40,13 +38,20 @@ class App extends Component {
                 <Route path="/new" render={this.childRender(New)} />
                 <Route path="/todoList" render={() => {
                   return (
-                    <div >
-                      <Route path="/todoList" component={this.childRender(TodoList)} />
+                    <div style={{height:'100%'}}>
+                      <Route path="/todoList" exact component={this.childRender(TodoList)} />
                       <Route path="/todoList/:todo" component={this.childRender(Start)} />
                     </div >
                   )
                 }} />
-                <Route path="/history" render={this.childRender(History)} />
+                <Route path="/history" render={() => {
+                  return (
+                    <div style={{height:'100%'}}>
+                      <Route path="/history" exact component={this.childRender(TodoList)} />
+                      <Route path="/history/:todo" component={this.childRender(History)} />
+                    </div >
+                  )
+                }} />
               </Switch >
             </Grid >
             <Grid item xs={'auto'} >

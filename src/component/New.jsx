@@ -60,11 +60,11 @@ class New extends React.Component {
             }}
             value={todoName}
             error={nameError}
-            helperText={nameErrorMessage}
+            helperText={<b >{nameErrorMessage}</b >}
+            style={{ width: '100%' }}
             onChange={event => {
               this.setState({ todoName: event.target.value, nameError: false, nameErrorMessage: '' });
             }}
-            style={{ width: '100%' }}
           />
         </Grid >
         <Hidden xsDown >
@@ -90,7 +90,7 @@ class New extends React.Component {
             value={todoTimes}
             error={timesError}
             onChange={event => {
-              const value = event.target.value;
+              const value = parseInt(event.target.value, 10);
               if (value < 1) {
                 this.setState({ todoTimes: 1 });
               } else if (value >= Number.MAX_SAFE_INTEGER) {
