@@ -5,9 +5,10 @@ import React, { Component } from 'react';
 
 class History extends Component {
   render() {
-    let str = JSON.stringify(this.props.store.todos);
+    const { todo } = this.props.match.params;
+    const { history } = this.props.store.todos[todo];
     return (
-      <span >{str}{this.props.store.todosCount}</span >
+      <span >{JSON.stringify(history)}</span >
     )
   }
 }

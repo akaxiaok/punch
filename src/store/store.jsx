@@ -1,31 +1,45 @@
 /**
  * Created by Kimi on 2018/6/21.
  */
-import { computed, observable } from "mobx";
+import { action, computed, observable, remove } from "mobx";
 import Todo from './Todo';
-
 
 function loadTodos() {
   return JSON.parse(localStorage.getItem('todos')) || {};
 }
 
+function needTodoExist(needExist) {
+  return function (target, name, desc) {
+    const oldValue = desc.value;
+    desc.value = function (...arg) {
+      const todoName = arg[0];
+      const todo = this.todos[todoName];
+      const needRun = (todo && needExist) || (!todo && !needExist);
+      if (needRun) {
+        oldValue.apply(this, arg);
+        localStorage.setItem('todos', JSON.stringify(this.todos));
+        return true;
+      } else {
+        return false;
+      }
+    };
+    return desc;
+  }
+}
+
 function saveTodos(target, name, desc) {
   const oldValue = desc.value;
   desc.value = function (...arg) {
-    const ret = oldValue.apply(this, arg);
+    oldValue.apply(this, arg);
     localStorage.setItem('todos', JSON.stringify(this.todos));
-    return ret;
   };
   return desc;
 }
 
 class Store {
 
-  @observable todos = {};
+  @observable todos = loadTodos();
 
-  constructor() {
-    this.todos = loadTodos();
-  }
 
   @computed
   get todosCount() {
@@ -38,24 +52,34 @@ class Store {
    * @param times
    * @returns {boolean} if exist return false
    */
+  @needTodoExist(false)
   @saveTodos
+  @action
   addTodo(name, times) {
-    if (this.todos[name]) {
-      return false;
-    } else {
-      this.todos[name] = new Todo(name, times);
-      return true;
-    }
+    this.todos[name] = observable.box(new Todo(name, times));
   }
 
+
+  @needTodoExist(false)
   @saveTodos
-  removeTodo(name){
-    if (!this.todos[name]) {
-      return false;
-    } else {
-      this.todos[name] = undefined;
-      return true;
-    }
+  @action
+  addRandom() {
+    const random = _.random(1, 10, 2);
+    this.todos[random] = observable.box(new Todo(random, _.random(1, 10)));
+  }
+
+  @needTodoExist(true)
+  @saveTodos
+  @action
+  deleteTodo(name) {
+    remove(this.todos, name);
+  }
+
+  @needTodoExist(true)
+  @saveTodos
+  @action
+  doToday(name, times) {
+    this.todos[name].history[_.today()] = times;
   }
 }
 

@@ -37,8 +37,9 @@ module.exports = {
       components: path.resolve(__dirname, 'src/components')
     }
   },
-  entry: {}, externals: {
-    'lodash': 'lodash',
+  entry: {},
+  externals: {
+    'lodash': '_',
     'react': 'React',
     'react-dom': 'ReactDOM',
   },

@@ -11,9 +11,11 @@ class Start extends Component {
 
   handleClick = () => {
     this.setState((prev, props) => {
-      if (prev.current < prev.times) {
-        const current = prev.current + 1;
-        const value = _.round(current / prev.times * 100);
+      const { current: prevCurrent, times } = prev;
+      if (prevCurrent < times) {
+        const current = prevCurrent + 1;
+        const value = _.getPercent(current, prev.times);
+        this.props.store.doToday(props.match.params.todo, current);
         return { current: current, value: value }
       }
     })
@@ -22,11 +24,13 @@ class Start extends Component {
   constructor(props) {
     super(props);
     const { todo } = props.match.params;
-    const { times } = props.store.todos[todo];
+    const { times, history } = props.store.todos[todo];
+    const current = history[_.today()] || 0;
+    const value = _.getPercent(current, times);
     this.state = {
-      times: times,
-      current: 0,
-      value: 0
+      times,
+      current,
+      value
     }
   }
 

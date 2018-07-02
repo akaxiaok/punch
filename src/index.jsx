@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-
+import './lib/util';
 import Store from './store/store';
 
 import App from './component/app';
@@ -12,13 +12,13 @@ window.store = store;
 
 window.addTodos = function () {
   for (var i = 0; i < 20; i++) {
-    store.addTodo(`test todo ${i}`, _.random(1, 100));
+    store.addTodo(`test todo ${i}`, _.random(1, 10));
   }
 };
 
 window.clearTodos = function () {
   _.each(store.todos, (v, k) => {
-    store.removeTodo(k);
+    store.deleteTodo(k);
   });
 };
 
