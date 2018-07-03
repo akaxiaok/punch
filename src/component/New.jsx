@@ -4,7 +4,6 @@
 import React from 'react';
 import { Button, TextField } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
 
 class New extends React.Component {
   state = {
@@ -28,7 +27,7 @@ class New extends React.Component {
         });
       }
     } else {
-      this.setState({ nameError: true, timesError: true });
+      this.setState({ nameError: true});
     }
   };
 
@@ -36,19 +35,13 @@ class New extends React.Component {
     const style = {
       direction: 'row',
       alignContent: 'flex-start',
-      alignItems: 'center',
       justify: 'center'
     };
     const { nameError, timesError, nameErrorMessage, timesErrorMessage, todoName, todoTimes } = this.state;
     const inputWidthMap = { xs: 12, sm: 10, md: 8, lg: 6, xl: 4 };
-    const gapWidthMap = { sm: 1, md: 2, lg: 3, xl: 4 };
     return (
-      <Grid container spacing={0} style={{ height: '100%' }} {...style}>
-        <Hidden xsDown >
-          <Grid item {...gapWidthMap} >
-          </Grid >
-        </Hidden >
-        <Grid item {...inputWidthMap} >
+      <Grid container item spacing={0} style={{ height: '100%', margin: '0 auto' }} {...style} {...inputWidthMap}>
+        <Grid item xs={12} >
           <TextField
             required
             ref="todoName"
@@ -67,15 +60,9 @@ class New extends React.Component {
             }}
           />
         </Grid >
-        <Hidden xsDown >
-          <Grid item {...gapWidthMap} >
-          </Grid >
-        </Hidden >
-        <Hidden xsDown >
-          <Grid item {...gapWidthMap} >
-          </Grid >
-        </Hidden >
-        <Grid item {...inputWidthMap} >
+
+
+        <Grid item xs={12} >
           <TextField
             required
             id="todoTimes"
@@ -102,14 +89,10 @@ class New extends React.Component {
             style={{ width: '100%' }}
           />
         </Grid >
-        <Hidden xsDown >
-          <Grid item {...gapWidthMap} >
-          </Grid >
-        </Hidden >
-        <Grid item xs={2} >
+        <Grid item >
           <Button onClick={this.create} color="primary" variant="raised" >Create</Button >
         </Grid >
-      </Grid >
+      </Grid>
     )
   }
 }

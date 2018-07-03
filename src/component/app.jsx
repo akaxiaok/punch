@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import New from './New';
@@ -22,7 +22,8 @@ class App extends Component {
   render() {
     const style = {
       direction: 'column',
-      wrap: 'nowrap'
+      wrap: 'nowrap',
+      alignItems: 'center'
     };
 
     return (
@@ -33,15 +34,17 @@ class App extends Component {
           <Grid container spacing={0} style={{ height: '100vh' }} {...style}>
             <Grid item xs={2} >
             </Grid >
-            <Grid item xs={12} >
+            <Grid item xs={12} style={{ width: '100%' }}>
               <Switch >
-                <Route path="/" exact render={this.childRender(New)} />
+                <Route path="/" exact render={() => (
+                  <Redirect to="/new" />
+                )} />
                 <Route path="/new" render={this.childRender(New)} />
-                <Route path="/todoList" render={() => {
+                <Route path="/start" render={() => {
                   return (
                     <div style={{ height: '100%' }} >
-                      <Route path="/todoList" exact component={this.childRender(StartList)} />
-                      <Route path="/todoList/:todo" component={this.childRender(Start)} />
+                      <Route path="/start" exact component={this.childRender(StartList)} />
+                      <Route path="/start/:todo" component={this.childRender(Start)} />
                     </div >
                   )
                 }} />
@@ -55,7 +58,7 @@ class App extends Component {
                 }} />
               </Switch >
             </Grid >
-            <Grid item xs={'auto'} >
+            <Grid item xs={'auto'} style={{ width: '100%' }}>
               <Nav />
             </Grid >
           </Grid >

@@ -1,7 +1,7 @@
 /**
  * Created by Kimi on 2018/6/21.
  */
-import { action, computed, observable, remove } from "mobx";
+import { action, computed, observable, remove, set } from "mobx";
 import Todo from './Todo';
 
 function loadTodos() {
@@ -56,7 +56,9 @@ class Store {
   @saveTodos
   @action
   addTodo(name, times) {
-    this.todos[name] = observable.box(new Todo(name, times));
+    const newTodo = {};
+    newTodo[name] = new Todo(name, times);
+    set(this.todos, newTodo);
   }
 
 
