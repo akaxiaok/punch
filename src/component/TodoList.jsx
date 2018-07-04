@@ -3,73 +3,53 @@
  */
 import React, { Component } from 'react';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
 
+import perf from "react-perftool-extension";
+import ListItem from "./ListItem";
+
+@perf
 class TodoList extends Component {
   state = {
     anchorEl: null,
   };
-  handleClick = (key) => {
-    return (event) => {
-      this.setState({
-        anchorEl: event.currentTarget,
-        key: key,
-      })
-    };
+  handleClick = (event, id) => {
+    this.setState({
+      anchorEl: event.currentTarget,
+      id: id,
+    })
   };
   handleClose = () => {
     this.setState({
       anchorEl: null,
-      key: null,
+      id: null,
     })
   };
 
   deleteTodo = (event) => {
-    this.props.store.deleteTodo(this.state.key);
+    this.props.store.deleteTodo(this.state.id);
     // this.props.store.addRandom();
     this.handleClose();
   };
-  addRandom = ()=>{
+  addRandom = () => {
     this.props.store.addRandom();
     this.handleClose();
   };
 
   render() {
     const url = this.props.match.url;
+    const action = this.props.action;
 
-    const getLink = (link) => {
-      return props => <Link to={`${url}/${link}`} {...props} />
-    };
     const todos = this.props.todos || this.props.store.todos;
     const lists = [];
     const { anchorEl } = this.state;
-    let actionMenu = (key) => (
-      <ListItemSecondaryAction >
-        <IconButton
-          aria-label="More"
-          aria-owns={anchorEl ? 'long-menu' : null}
-          aria-haspopup="true"
-          onClick={this.handleClick(key)}
-        >
-          <MoreVertIcon />
-        </IconButton >
-      </ListItemSecondaryAction >
-    );
-    _.each(todos, (todo, key) => {
+    _.each(todos, (todo, id) => {
+      const props = { id, url, action };
       lists.push(
-        <ListItem button component={getLink(key)} key={key} >
-          <ListItemText primary={key} />
-          {this.props.action ? actionMenu(key) : null}
-        </ListItem >
+        <ListItem key={id} {...props} onClick={this.handleClick} />
       )
     });
     return (

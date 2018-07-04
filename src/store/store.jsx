@@ -17,7 +17,6 @@ function needTodoExist(needExist) {
       const needRun = (todo && needExist) || (!todo && !needExist);
       if (needRun) {
         oldValue.apply(this, arg);
-        localStorage.setItem('todos', JSON.stringify(this.todos));
         return true;
       } else {
         return false;
@@ -66,7 +65,7 @@ class Store {
   @saveTodos
   @action
   addRandom() {
-    const random = _.random(1, 10, 2);
+    const random = _.random(1, 10, true);
     this.todos[random] = observable.box(new Todo(random, _.random(1, 10)));
   }
 
