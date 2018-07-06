@@ -9,6 +9,7 @@ import Start from './Start';
 import History from './History';
 import StartList from './StartList';
 import HistoryList from './HistoryList';
+import TopBar from './TopBar';
 
 @observer
 class App extends Component {
@@ -32,9 +33,10 @@ class App extends Component {
         {/* The rest of your application */}
         <BrowserRouter >
           <Grid container spacing={0} style={{ height: '100vh' }} {...style}>
-            <Grid item xs={2} >
+            <Grid item xs='auto' style={{ width: '100%' }}>
+              <TopBar />
             </Grid >
-            <Grid item xs={12} style={{ width: '100%' }}>
+            <Grid item xs={12} style={{ width: '100%' }} >
               <Switch >
                 <Route path="/" exact render={() => (
                   <Redirect to="/new" />
@@ -58,7 +60,7 @@ class App extends Component {
                 }} />
               </Switch >
             </Grid >
-            <Grid item xs={'auto'} style={{ width: '100%' }}>
+            <Grid item xs={'auto'} style={{ width: '100%' }} >
               <Nav />
             </Grid >
           </Grid >

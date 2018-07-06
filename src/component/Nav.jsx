@@ -20,24 +20,15 @@ class Nav extends React.Component {
     history: 2,
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: this.rout[this.props.location.pathname.split('/')[1]] || 0
-    };
-  }
-
   render() {
-    const { classes } = this.props;
+    const value = this.rout[this.props.location.pathname.split('/')[1]] || 0;
     const LinkToNew = props => <Link to="/new" {...props} />;
     const LinkToList = props => <Link to="/start" {...props} />;
     const LinkToHistory = props => <Link to="/history" {...props} />;
-    const { value } = this.state;
     return (
       <BottomNavigation
         value={value}
         showLabels
-        onChange={this.handleChange}
       >
         <BottomNavigationAction label="New" icon={<CreateIcon />} component={LinkToNew} />
         <BottomNavigationAction label="Start" icon={<ThumbUpIcon />} component={LinkToList} />
